@@ -11,18 +11,27 @@ public class PlayerController : MonoBehaviour
     }
     private float speed = 5f;
     private float strafeSpeed = 2f;
-    private float turnSpeed = 100f;
+    private float turnSpeed = 200f;
     private float horizontalInput;
     private float forwardInput;
     private float lookX;
     private float lookY;
 
+    public GameObject bulletPrefab;
+    public GameObject pistol;
+    public GameObject aug;
+    public int pistolClip = 7;
+
+    public AudioSource OutOfBullets;
+    public AudioSource Reload;
+    public AudioSource ReloadFinish;
+    private bool isReloading=false;
+
     // Update is called once per frame
     void Update()
     {
         Movement();
-        StartCamera();
-
+        FireBullet();
     }
 
     void Movement()
@@ -45,8 +54,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void StartCamera()
-    {
-
+    // Function for fire bullets and control number of bullets in clip
+    void FireBullet(){
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            if ((pistolClip > 0)&&(!isReloading)){
+                Instantiate(bulletPrefab,pistol.transform.position,pistol.transform.rotation);
+                pistolClip-=1;
+            }
+            else if(!isReloading){
+                OutOfBullets.Play();
+            }
+        }
+        if ((Input.GetKeyDown(KeyCode.Mouse1))&&(pistolClip!=7)){
+                isReloading=true;
+                Reload.Play();
+                StartCoroutine(ReloadingPistol());
+        }
     }
+
+//Function for wait 2 seconds for finish reload
+IEnumerator ReloadingPistol()  //  <-  its a standalone method
+{
+    yield return new WaitForSeconds(2);
+    ReloadFinish.Play();
+    pistolClip=7;  
+    isReloading=false;
+
+}
+   
 }
