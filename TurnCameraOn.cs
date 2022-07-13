@@ -17,6 +17,10 @@ public class TurnCameraOn : MonoBehaviour
     public GameObject cam11;
     public GameObject cam12;
     public GameObject cam13;
+
+    private float posX;
+    private float posY;
+    private float posZ;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +30,11 @@ public class TurnCameraOn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        posX=transform.position.x;
+        posY=transform.position.y;
+        posZ=transform.position.z;
         //Set Camera 1 based on X and Z position
-        if ((transform.position.x > 8f)&&(transform.position.z > 13f))
+        if ((posX > 8f)&&(posZ > 13f))
         {
             cam1.SetActive(true);
             cam2.SetActive(false);
@@ -44,7 +51,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
         //Set Camera 2 based on X and Z position
-        if ((transform.position.x < 8f)&&(transform.position.x > -10f)&&(transform.position.z > 13f))
+        if ((posX < 8f)&&(posX > -10f)&&(posZ > 13f))
         {
             cam1.SetActive(false);
             cam2.SetActive(true);
@@ -61,7 +68,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
         //Set Camera 3 based on X and Z position
-        if ((transform.position.x < -10f)&&(transform.position.z > 13f))
+        if ((posX < -10f)&&(posZ > 13f))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -78,7 +85,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
         //Set Camera 4 based on X and Z position
-        if ((transform.position.x < -3f)&&(transform.position.z < 13f)&&(transform.position.z > 2.5f))
+        if ((posX < -3f)&&(posZ < 13f)&&(posZ > 2.5f))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -95,7 +102,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
          //Set Camera 5 based on X and Z position
-        if ((transform.position.x > -3f)&&(transform.position.z < 13f)&&(transform.position.z > 2.5f))
+        if ((posX > -3f)&&(posZ < 13f)&&(posZ > 2.5f))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -112,7 +119,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
          //Set Camera 6 based on X and Z position
-        if ((transform.position.x > -3f)&&(transform.position.z < 2.5f))
+        if ((posX > -3f)&&(posZ < 2.5f))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -129,7 +136,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
            //Set Camera 7 based on X and Z position
-        if ((transform.position.x < 10f)&&(transform.position.x > -10f)&&(transform.position.z < 2.5f)&&(transform.position.z > -6f))
+        if ((posX < 10f)&&(posX > -10f)&&(posZ < 2.5f)&&(posZ > -6f))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -146,7 +153,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
            //Set Camera 8 based on X and Z position
-        if ((transform.position.x < -10f)&&(transform.position.z < 2.5f)&&(transform.position.z > -6f))
+        if ((posX < -10f)&&(posZ < 2.5f)&&(posZ > -6f))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -163,9 +170,9 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
           //Set Camera 9 based on X and Z position in 2 places
-        if (((transform.position.z < -10)&&(transform.position.x < -22f)&&(transform.position.x > -25f)) 
+        if (((posZ < -10)&&(posX < -22f)&&(posX > -25f)) 
         ||
-        ((transform.position.z > -25f)&&(transform.position.z < -22f)&&(transform.position.x < 0)))
+        ((posZ > -25f)&&(posZ < -22f)&&(posX < 0)))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -182,9 +189,9 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
            //Set Camera 10 based on X and Z position in 2 places
-        if (((transform.position.z > -25f)&&(transform.position.z < -22f)&&(transform.position.x > 0))
+        if (((posZ > -25f)&&(posZ < -22f)&&(posX > 0))
         ||
-        (transform.position.z < -10f)&&(transform.position.x > 20)&&(transform.position.x < 25))
+        (posZ < -10f)&&(posX > 20)&&(posX < 25))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -201,7 +208,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
             //Set Camera 11 based on X and Z position in 2 places
-        if ((transform.position.z > -22f)&&(transform.position.z < -7f)&&(transform.position.x>-20)&&(transform.position.x<-9))
+        if ((posZ > -22f)&&(posZ < -7f)&&(posX>-20)&&(posX<-9))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -218,7 +225,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
             //Set Camera 12 based on X and Z position in 2 places
-        if ((transform.position.z > -22f)&&(transform.position.z < -7f)&&(transform.position.x>-9)&&(transform.position.x<3))
+        if ((posZ> -22f)&&(posZ < -7f)&&(posX > -9)&&(posX < 3))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
@@ -235,7 +242,7 @@ public class TurnCameraOn : MonoBehaviour
             cam13.SetActive(false);
         }
             //Set Camera 13 based on X and Z position in 2 places
-        if ((transform.position.z > -22f)&&(transform.position.z < -7f)&&(transform.position.x<19)&&(transform.position.x>3))
+        if ((posZ > -22f)&&(posZ < -7f)&&(posX < 19)&&(posX > 3))
         {
             cam1.SetActive(false);
             cam2.SetActive(false);
