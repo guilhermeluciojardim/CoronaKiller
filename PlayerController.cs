@@ -17,7 +17,13 @@ public class PlayerController : MonoBehaviour
     private float lookX;
     private float lookY;
 
+    private float ZStep=0;
+     bool rightfoot=true;
+    bool leftfoot=false;
+
+
     public GameObject bulletPrefab;
+    public GameObject bulletAugPrefab;
     public GameObject pistol;
     public GameObject aug;
     public int pistolClip = 7;
@@ -25,6 +31,9 @@ public class PlayerController : MonoBehaviour
     public AudioSource OutOfBullets;
     public AudioSource Reload;
     public AudioSource ReloadFinish;
+    public AudioSource ReloadSlower;
+    public AudioSource Step1;
+    public AudioSource Step2;
     private bool isReloading=false;
     private int CurrentWeapon = 1;
     private Vector3 WeaponPos;
@@ -34,29 +43,73 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Movement();
+        KeepStanding();
         ChangeWeapon();
         FireBullet();
     }
+//Function to keep the player from falling
 
+    void KeepStanding(){
+        float lockpos=0;
+        float x = transform.rotation.eulerAngles.x;
+        float y = transform.rotation.eulerAngles.y;
+        float z = transform.rotation.eulerAngles.z;
+        if ((z > 10.0f)||(z < -10.0f)){
+            transform.rotation = Quaternion.Euler (x,y,lockpos);
+        }
+        if ((x > 10.0f)||(x < -10.0f)){
+            transform.rotation = Quaternion.Euler (lockpos,y,z);
+        }
+
+        //transform.rotation = Quaternion.Euler (lockPos, lockPos, lockPos);
+    }
+    //Function for movement using W A S D keys
     void Movement()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical");
-
-        transform.Translate(Vector3.forward * forwardInput * Time.deltaTime * speed);
-        transform.Rotate(Vector3.up, lookX * Time.deltaTime * turnSpeed);
-
-        lookX = Input.GetAxis("Mouse X");
-        lookY = Input.GetAxis("Mouse Y");
+        if (Input.GetKey(KeyCode.W)){
+            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            transform.Rotate(0,0,AnimatedSteps());
+        }
+        if (Input.GetKey(KeyCode.S)){
+            transform.Translate(Vector3.back * Time.deltaTime * speed);
+            transform.Rotate(0,0,AnimatedSteps());
+        }
         if (Input.GetKey (KeyCode.D))
         {
             transform.Translate(Vector3.right * Time.deltaTime * strafeSpeed);
+            transform.Rotate(0,0,AnimatedSteps());
         }
         if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(Vector3.left * Time.deltaTime * strafeSpeed);
+            transform.Rotate(0,0,AnimatedSteps());
+            
         }
+        lookX = Input.GetAxis("Mouse X");
+        transform.Rotate(Vector3.up, lookX * Time.deltaTime * turnSpeed);
     }
+// Function to animate steps from walking
+    int Count=0;
+    float AnimatedSteps(){
+       Count+=1;
+        if ((ZStep<5)&&(rightfoot)&&(Count==25)){
+            ZStep = 5;
+            rightfoot=false;
+            leftfoot=true;
+            Step1.Play();
+            Count=0;
+            return ZStep;
+        }
+        else if ((ZStep >-5)&&(leftfoot)&&(Count==25)){
+            ZStep=-5;
+            rightfoot=true;
+            leftfoot=false;
+            Step2.Play();
+            Count=0;
+            return ZStep;
+            }
+            return 0;
+        }
 
     void ChangeWeapon(){
         if ((Input.GetKeyDown(KeyCode.Tab))&&(!isReloading)){
@@ -99,27 +152,27 @@ public class PlayerController : MonoBehaviour
                     OutOfBullets.Play();
                 }
             }
-            if ((Input.GetKeyDown(KeyCode.Mouse1))&&(pistolClip!=7)){
+            if ((Input.GetKeyDown(KeyCode.Mouse1))&&(pistolClip!=7)&&(!isReloading)){
                 isReloading=true;
                 Reload.Play();
-                StartCoroutine(ReloadingPistol(2));
+                StartCoroutine(ReloadingPistol(3));
             }    
         }
         //Firing Aug
         else if (CurrentWeapon==2){
             if (Input.GetKeyDown(KeyCode.Mouse0)){
                 if ((augClip > 0)&&(!isReloading)){
-                    Instantiate(bulletPrefab,aug.transform.position,aug.transform.rotation);
+                    Instantiate(bulletAugPrefab,aug.transform.position,aug.transform.rotation);
                     augClip-=1;
                 }
                 else if(!isReloading){
                     OutOfBullets.Play();
                 }
             }    
-            if ((Input.GetKeyDown(KeyCode.Mouse1))&&(augClip!=25)){
+            if ((Input.GetKeyDown(KeyCode.Mouse1))&&(augClip!=25)&&(!isReloading)){
                 isReloading=true;
-                Reload.Play();
-                StartCoroutine(ReloadingAug(4));
+                ReloadSlower.Play();
+                StartCoroutine(ReloadingAug(8));
             }
         }
     }
