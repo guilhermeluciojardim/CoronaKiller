@@ -27,12 +27,12 @@ I'm currently using Unity 3D with unity Editor Version 2020.3.36f1
 
 ## 🚀 Installing Corona Killer
 
-1 - Download and Install Unity Editor (Recommended version 2020.3.36f1
-2 - Create a new project
-3 - Download CoronaKiller Package from link below:
-https://drive.google.com/file/d/1GZVYkQjk6LsLzZ0ICmsw14Bn8jKU4hbj/view?usp=sharing
-3 - Go to Menu Assets - Import Package - Custom Package
-4 - Wait for package install
-5 - Hit play! 
+1 - Download and Install Unity Editor (Recommended version 2020.3.36f1 <br>
+2 - Create a new project <br>
+3 - Download CoronaKiller Package from link below:<br>
+https://drive.google.com/file/d/1GZVYkQjk6LsLzZ0ICmsw14Bn8jKU4hbj/view?usp=sharing <br>
+3 - Go to Menu Assets - Import Package - Custom Package <br>
+4 - Wait for package install <br>
+5 - Hit play! <br>
 
 [⬆ Voltar ao topo](#Corona)<br>
