@@ -19,15 +19,20 @@ The project is still in the beggining and the next updates will be the following
 - [ ] Set cameras around the scene
 - [ ] Ajust game phisics for better player control and movement
 - [ ] Add monsters and create their movement in the game
-- [ ] Create inventory control for guns and Prefabs for bullets
+- [x] Create inventory control for guns and Prefabs for bullets
 
 ## 💻 System Requirements
 
-I'm currently using Unity 3D with unity Editor Version 2020.3.32f
+I'm currently using Unity 3D with unity Editor Version 2020.3.36f1
 
 ## 🚀 Installing Corona Killer
 
-Soon I'll create a package for easy install.. 
-Please wait for further instructions..
+1 - Download and Install Unity Editor (Recommended version 2020.3.36f1 <br>
+2 - Create a new project <br>
+3 - Download CoronaKiller Package from link below:<br>
+https://drive.google.com/file/d/1GZVYkQjk6LsLzZ0ICmsw14Bn8jKU4hbj/view?usp=sharing <br>
+3 - Go to Menu Assets - Import Package - Custom Package <br>
+4 - Wait for package install <br>
+5 - Hit play! <br>
 
 [⬆ Voltar ao topo](#Corona)<br>
