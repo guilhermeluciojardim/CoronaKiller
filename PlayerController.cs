@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     }
     private float speed = 5f;
     private float strafeSpeed = 5f;
-    private float turnSpeed = 200f;
+    private float turnSpeed = 450f;
     private float horizontalInput;
     private float forwardInput;
     private float lookX;
@@ -34,20 +34,51 @@ public class PlayerController : MonoBehaviour
     public AudioSource ReloadSlower;
     public AudioSource Step1;
     public AudioSource Step2;
+    public AudioSource JumpSound;
     private bool isReloading=false;
     private int CurrentWeapon = 1;
     private Vector3 WeaponPos;
     private Quaternion WeaponRotation;
 
+    BoxCollider playerBox;
+
     // Update is called once per frame
     void Update()
     {
         Movement();
+        Jump();
         KeepStanding();
         ChangeWeapon();
         FireBullet();
     }
 //Function to keep the player from falling
+
+    void Awake(){
+        rb = GetComponent<Rigidbody>();
+    }
+private float fallMultiplier = 3.5f;
+private float lowJumpMultiplier = 2f;
+private float jumpVelocity = 8f;
+Rigidbody rb;
+private bool isJumpAvailable = true;
+
+
+    void Jump(){
+        //Jumping
+        if (Input.GetKeyDown(KeyCode.Space) && isJumpAvailable ){
+            GetComponent<Rigidbody>().velocity = Vector3.up * jumpVelocity;
+            JumpSound.Play();
+            isJumpAvailable = false;
+            StartCoroutine(WaitForJumpAgain(1));
+        }
+        //Increasing gravity velocity for better falling
+        if (rb.velocity.y < 0){
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        else if (rb.velocity.y > 0 && !Input.GetKeyDown(KeyCode.Space)){
+            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        } 
+    }
 
     void KeepStanding(){
         float lockpos=0;
@@ -60,10 +91,8 @@ public class PlayerController : MonoBehaviour
         if ((x > 10.0f)||(x < -10.0f)){
             transform.rotation = Quaternion.Euler (lockpos,y,z);
         }
-
-        //transform.rotation = Quaternion.Euler (lockPos, lockPos, lockPos);
     }
-    //Function for movement using W A S D keys
+    //Function for movement using W A S D keys and Mouse for look
     void Movement()
     {
         if (Input.GetKey(KeyCode.W)){
@@ -85,32 +114,38 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(0,0,AnimatedSteps());
             
         }
-        lookX = Input.GetAxis("Mouse X");
+        horizontalInput = Input.GetAxis("Horizontal");
+        forwardInput = Input.GetAxis("Vertical");
         transform.Rotate(Vector3.up, lookX * Time.deltaTime * turnSpeed);
+
+        lookX = Input.GetAxis("Mouse X");
+        lookY = Input.GetAxis("Mouse Y");
     }
 // Function to animate steps from walking
     int Count=0;
     float AnimatedSteps(){
        Count+=1;
+       // Move left foot
         if ((ZStep<5)&&(rightfoot)&&(Count==25)){
             ZStep = 5;
             rightfoot=false;
             leftfoot=true;
-            Step1.Play();
+            if (isJumpAvailable){Step1.Play();}
             Count=0;
             return ZStep;
         }
+        //Move right foot
         else if ((ZStep >-5)&&(leftfoot)&&(Count==25)){
             ZStep=-5;
             rightfoot=true;
             leftfoot=false;
-            Step2.Play();
+            if (isJumpAvailable){Step2.Play();}
             Count=0;
             return ZStep;
             }
             return 0;
         }
-
+//Function for change weapon on pressing TAB
     void ChangeWeapon(){
         if ((Input.GetKeyDown(KeyCode.Tab))&&(!isReloading)){
             if (CurrentWeapon==1){
@@ -152,6 +187,7 @@ public class PlayerController : MonoBehaviour
                     OutOfBullets.Play();
                 }
             }
+            //Reloading Pistol
             if ((Input.GetKeyDown(KeyCode.Mouse1))&&(pistolClip!=7)&&(!isReloading)){
                 isReloading=true;
                 Reload.Play();
@@ -169,6 +205,7 @@ public class PlayerController : MonoBehaviour
                     OutOfBullets.Play();
                 }
             }    
+            // Reloading Aug
             if ((Input.GetKeyDown(KeyCode.Mouse1))&&(augClip!=25)&&(!isReloading)){
                 isReloading=true;
                 ReloadSlower.Play();
@@ -186,7 +223,6 @@ IEnumerator ReloadingPistol(int reloadtime)  //  <-  its a standalone method
     isReloading=false;
 
 }
-
 IEnumerator ReloadingAug(int reloadtime)  //  <-  its a standalone method
 {
     yield return new WaitForSeconds(reloadtime);
@@ -195,5 +231,10 @@ IEnumerator ReloadingAug(int reloadtime)  //  <-  its a standalone method
     isReloading=false;
 
 }
-   
+//Function for wait for jump again
+  IEnumerator WaitForJumpAgain(int reloadtime)  //  <-  its a standalone method
+{
+    yield return new WaitForSeconds(reloadtime); 
+    isJumpAvailable = true;
+} 
 }
