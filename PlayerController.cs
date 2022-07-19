@@ -114,9 +114,7 @@ private bool isJumpAvailable = true;
             transform.Rotate(0,0,AnimatedSteps());
             
         }
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical");
-        transform.Rotate(Vector3.up, lookX * Time.deltaTime * turnSpeed);
+          transform.Rotate(Vector3.up, lookX * Time.deltaTime * turnSpeed);
 
         lookX = Input.GetAxis("Mouse X");
         lookY = Input.GetAxis("Mouse Y");
@@ -174,7 +172,7 @@ private bool isJumpAvailable = true;
         }
     }
 
-    // Function for fire bullets and control number of bullets in clip
+    // Function for fire bullets, control number of bullets in clip and Reload
     void FireBullet(){
         // Firing Pistol
         if (CurrentWeapon==1){ 
@@ -213,22 +211,27 @@ private bool isJumpAvailable = true;
             }
         }
     }
+    
 
 //Function for wait X seconds for finish reload
 IEnumerator ReloadingPistol(int reloadtime)  //  <-  its a standalone method
 {
+    pistol.transform.Rotate(20,0,0);
     yield return new WaitForSeconds(reloadtime);
     ReloadFinish.Play();
     pistolClip=7;  
     isReloading=false;
+    pistol.transform.Rotate(-20,0,0);
 
 }
 IEnumerator ReloadingAug(int reloadtime)  //  <-  its a standalone method
 {
+    aug.transform.Rotate(-80,0,0);
     yield return new WaitForSeconds(reloadtime);
     ReloadFinish.Play();
     augClip=25;  
     isReloading=false;
+    aug.transform.Rotate(80,0,0);
 
 }
 //Function for wait for jump again

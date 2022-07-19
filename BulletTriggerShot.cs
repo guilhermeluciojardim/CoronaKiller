@@ -21,7 +21,6 @@ public class BulletTriggerShot : MonoBehaviour
     
          if (other.gameObject.CompareTag ("CoronaMonster")) 
          {           
-             Debug.Log ("Hit");
              AudioSource audio = gameObject.AddComponent < AudioSource > ();
                 audio.PlayOneShot ((AudioClip)Resources.Load ("Hit"));
             if (!isColorChanged){
@@ -30,6 +29,8 @@ public class BulletTriggerShot : MonoBehaviour
             other.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
             isColorChanged=true;
             StartCoroutine(WaitForColor(other,original));
+
+            
          }
      }
 
@@ -38,5 +39,6 @@ public class BulletTriggerShot : MonoBehaviour
     yield return new WaitForSeconds(0.01f); 
     other.gameObject.GetComponent<MeshRenderer>().material.color = original;
     isColorChanged = false;
+    other.gameObject.SendMessage("HealthCheck", 1);
 } 
 }
