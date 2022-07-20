@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class CoronaMonster : MonoBehaviour
 {
-    public int Health = 5;
+    public int Health = 12;
     public float speed = 3.0f;
-    public float angrySpeed = 5.0f;
+    public float angrySpeed = 8.0f;
 
     public bool isAngry = false;
     public bool isLooking = true;
     public GameObject target;
+    public ParticleSystem explosionParticle;
+
+    public AudioSource monsterAngryNoise;
+    public AudioSource monsterNormalNoise;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +38,7 @@ public class CoronaMonster : MonoBehaviour
 
 private int steps = 500;
     void LookForPlayer(){
+
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
         steps-=1;
         if (steps == 0){
@@ -47,8 +53,12 @@ private int steps = 500;
 
     void AngryMovement(){
         //get a random direction
+        monsterNormalNoise.Stop();
+        monsterAngryNoise.loop = true;
+        monsterAngryNoise.Play();
         Vector3 r = Random.insideUnitCircle;  
         r.Set(r.x, 0, r.y);
+        transform.LookAt(target.transform,Vector3.up);
 
         transform.position =
             Vector3.MoveTowards(transform.position, transform.position + r, angrySpeed * Time.deltaTime);
@@ -63,7 +73,12 @@ private int steps = 500;
         isLooking=false;
         isAngry=true;
         if (Health < 1){
-            Destroy(gameObject);
+           explosionParticle.Play();
+           monsterNormalNoise.Stop();
+           monsterAngryNoise.Stop();
+           gameObject.GetComponent<MeshRenderer>().enabled = false;
+           StartCoroutine(WaitParticles()); 
+            
         }
     }
 void OnTriggerEnter(Collider other){
@@ -71,5 +86,12 @@ void OnTriggerEnter(Collider other){
         isLooking = false;
     }
 }
+IEnumerator WaitParticles()
+{
+    yield return new WaitForSeconds(1f);
+    Destroy(gameObject);
+} 
+
+
 
 }

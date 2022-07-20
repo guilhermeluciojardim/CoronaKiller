@@ -35,21 +35,29 @@ public class PlayerController : MonoBehaviour
     public AudioSource Step1;
     public AudioSource Step2;
     public AudioSource JumpSound;
+
+    public AudioSource Grunt1;
+    public AudioSource Grunt2;
     private bool isReloading=false;
     private int CurrentWeapon = 1;
     private Vector3 WeaponPos;
     private Quaternion WeaponRotation;
+
+    private bool gameOver = false;
 
     BoxCollider playerBox;
 
     // Update is called once per frame
     void Update()
     {
-        Movement();
-        Jump();
-        KeepStanding();
-        ChangeWeapon();
-        FireBullet();
+        if (!gameOver){
+            Movement();
+            Jump();
+            KeepStanding();
+            ChangeWeapon();
+            FireBullet();
+        }
+        
     }
 //Function to keep the player from falling
 
@@ -61,6 +69,8 @@ private float lowJumpMultiplier = 2f;
 private float jumpVelocity = 8f;
 Rigidbody rb;
 private bool isJumpAvailable = true;
+
+public int Health = 100;
 
 
     void Jump(){
@@ -114,10 +124,8 @@ private bool isJumpAvailable = true;
             transform.Rotate(0,0,AnimatedSteps());
             
         }
-          transform.Rotate(Vector3.up, lookX * Time.deltaTime * turnSpeed);
-
-        lookX = Input.GetAxis("Mouse X");
-        lookY = Input.GetAxis("Mouse Y");
+            lookX = Input.GetAxis("Mouse X");
+            transform.Rotate(Vector3.up, lookX * Time.deltaTime * turnSpeed);
     }
 // Function to animate steps from walking
     int Count=0;
@@ -212,6 +220,23 @@ private bool isJumpAvailable = true;
         }
     }
     
+void OnCollisionEnter(Collision collider){
+    if (!gameOver){
+        if (collider.gameObject.CompareTag("CoronaMonster")){
+            Health -= 5;
+            Grunt1.Play();
+            collider.gameObject.transform.Translate(Vector3.back * Time.deltaTime);
+        }
+        if (Health < 0) {
+            gameOver=true;
+            Grunt2.Play();
+            Vector3 rot = new Vector3(90,0,0);
+            transform.Rotate(rot * Time.deltaTime);
+            explosionParticle.Play();
+        }
+    }
+}
+public ParticleSystem explosionParticle;
 
 //Function for wait X seconds for finish reload
 IEnumerator ReloadingPistol(int reloadtime)  //  <-  its a standalone method

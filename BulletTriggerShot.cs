@@ -30,10 +30,10 @@ public class BulletTriggerShot : MonoBehaviour
             isColorChanged=true;
             StartCoroutine(WaitForColor(other,original));
 
-            
          }
      }
 
+// Function for flashing color and decrease 1 health on monster
        IEnumerator WaitForColor(Collider other, Color original)
 {
     yield return new WaitForSeconds(0.01f); 
