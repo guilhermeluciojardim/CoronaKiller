@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoronaMonster : MonoBehaviour
 {
-    public int Health = 12;
+    public int Health = 10;
     public float speed = 3.0f;
     public float angrySpeed = 8.0f;
 
@@ -52,9 +52,8 @@ private int steps = 500;
     }
 
     void AngryMovement(){
-        //get a random direction
+
         monsterNormalNoise.Stop();
-        monsterAngryNoise.loop = true;
         monsterAngryNoise.Play();
         Vector3 r = Random.insideUnitCircle;  
         r.Set(r.x, 0, r.y);
