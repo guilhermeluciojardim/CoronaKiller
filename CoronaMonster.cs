@@ -36,12 +36,12 @@ public class CoronaMonster : MonoBehaviour
         }
     }
 
-private int steps = 500;
+public int steps = 500;
     void LookForPlayer(){
 
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        steps-=1;
-        if (steps == 0){
+        steps-=5;
+        if (steps <10){
             transform.Rotate(0,180,0);
             steps=500;
         }
