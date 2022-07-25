@@ -16,10 +16,15 @@
 
 The project is still in the beggining and the next updates will be the following tasks
 
-- [ ] Set cameras around the scene
-- [ ] Ajust game phisics for better player control and movement
-- [ ] Add monsters and create their movement in the game
+- [x] Set cameras around the scene
+- [x] Ajust game phisics for better player control and movement
+- [x] Add monsters and create their movement in the game
 - [x] Create inventory control for guns and Prefabs for bullets
+- [x] Make a begining animation for entry in the game
+- [ ] Create User interface with Health and Bullet Control
+- [ ] Animation for game over
+- [ ] Make a finishing animation
+
 
 ## 💻 System Requirements
 
@@ -27,7 +32,7 @@ I'm currently using Unity 3D with unity Editor Version 2020.3.36f1
 
 ## 🚀 Installing Corona Killer
 
-1 - Download and Install Unity Editor (Recommended version 2020.3.36f1 <br>
+1 - Download and Install Unity Editor (Recommended version 2020.3.36f1) - https://learn.unity.com/tutorial/install-the-unity-hub-and-editor# <br>
 2 - Create a new project <br>
 3 - Download CoronaKiller Package from link below:<br>
 https://drive.google.com/file/d/1GZVYkQjk6LsLzZ0ICmsw14Bn8jKU4hbj/view?usp=sharing <br>
