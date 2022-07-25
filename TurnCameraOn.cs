@@ -178,8 +178,13 @@ void BeginEntryAnimation(){
                     cameraIndex=17;
                 }
                 if ((posX < 5) && (posX>-20) && (posZ < 11) && (posZ > 2)){
+                    cameraIndex=20;
+                }
+                if ((posX < 11) && (posZ < 11) && (posZ > 2)){
                     cameraIndex=21;
                 }
+                
+                
 
         }
         //Finish the second floor of cameras
@@ -192,9 +197,7 @@ void BeginEntryAnimation(){
             if ((posX > -20) && (posX < 10) && (posZ >-7)&& (posZ < 13)){
                 cameraIndex=19;
             }
-            if ((posX>10) && (posX < 25) && (posZ >-7)&& (posZ < 13)){
-                cameraIndex=22;
-            }
+            
         }
 
         // Activate the camera according to cameraindex set in player position

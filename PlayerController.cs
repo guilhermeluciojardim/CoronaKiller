@@ -1,14 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        healthText.text = "Health: " + health;
+        pistolText.text = "Pistol: " + pistolClip;
+        augText.text = "AUG: " + augClip;
     }
+    public TextMeshProUGUI healthText;
+
+    public TextMeshProUGUI pistolText;
+    public TextMeshProUGUI augText;
+
+    public TextMeshProUGUI gameoverText;
+    public Button restartButton;
+
+    
     private float speed = 5f;
     private float strafeSpeed = 5f;
     private float turnSpeed = 450f;
@@ -56,8 +71,35 @@ public class PlayerController : MonoBehaviour
             KeepStanding();
             ChangeWeapon();
             FireBullet();
+            UpdateHealthText();
+            UpdateBulletsText();
         }
-        
+        else{
+            UpdateGameOverText();
+        }
+    }
+
+    void UpdateHealthText(){
+        healthText.text = "Health: " + health;
+    }
+    void UpdateBulletsText(){
+        if (isReloading && CurrentWeapon==1){
+            pistolText.text = "Pistol: Reloading...";    
+        }
+        else if (isReloading && CurrentWeapon==2){
+            augText.text = "AUG: Reloading...";    
+        }
+        else {
+        pistolText.text = "Pistol: " + pistolClip;
+        augText.text = "AUG: " + augClip;
+        }    
+    }
+    void UpdateGameOverText(){
+        gameoverText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+    }
+    public void RestartGame(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 //Function to keep the player from falling
 
@@ -70,7 +112,7 @@ private float jumpVelocity = 8f;
 Rigidbody rb;
 private bool isJumpAvailable = true;
 
-public int Health = 100;
+public int health = 100;
 
 
     void Jump(){
@@ -89,7 +131,7 @@ public int Health = 100;
             rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         } 
     }
-
+// Prevent Player from falling
     void KeepStanding(){
         float lockpos=0;
         float x = transform.rotation.eulerAngles.x;
@@ -180,7 +222,7 @@ public int Health = 100;
         }
     }
 
-    // Function for fire bullets, control number of bullets in clip and Reload
+    // Function for fire bullets, control number of bullets in clip and Reload with left and right mouse click
     void FireBullet(){
         // Firing Pistol
         if (CurrentWeapon==1){ 
@@ -219,15 +261,16 @@ public int Health = 100;
             }
         }
     }
-    
+
+// function for check if the player collides with corona monster and loses health
 void OnCollisionEnter(Collision collider){
     if (!gameOver){
         if (collider.gameObject.CompareTag("CoronaMonster")){
-            Health -= 5;
+            health -= 1;
             Grunt1.Play();
             collider.gameObject.transform.Translate(Vector3.back * Time.deltaTime);
         }
-        if (Health < 0) {
+        if (health < 0) {
             gameOver=true;
             Grunt2.Play();
             Vector3 rot = new Vector3(90,0,0);
@@ -238,7 +281,7 @@ void OnCollisionEnter(Collision collider){
 }
 public ParticleSystem explosionParticle;
 
-//Function for wait X seconds for finish reload
+//Function for wait X seconds for finish reload pistol
 IEnumerator ReloadingPistol(int reloadtime)  //  <-  its a standalone method
 {
     pistol.transform.Rotate(20,0,0);
@@ -249,6 +292,7 @@ IEnumerator ReloadingPistol(int reloadtime)  //  <-  its a standalone method
     pistol.transform.Rotate(-20,0,0);
 
 }
+//Function for wait X seconds for finish reload AUG
 IEnumerator ReloadingAug(int reloadtime)  //  <-  its a standalone method
 {
     aug.transform.Rotate(-80,0,0);
