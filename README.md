@@ -21,9 +21,11 @@ The project is still in the beggining and the next updates will be the following
 - [x] Add monsters and create their movement in the game
 - [x] Create inventory control for guns and Prefabs for bullets
 - [x] Make a begining animation for entry in the game
-- [ ] Create User interface with Health and Bullet Control
-- [ ] Animation for game over
+- [x] Create User interface with Health and Bullet Control
+- [x] Animation for game over
 - [ ] Make a finishing animation
+- [ ] Project Optimization
+
 
 
 ## 💻 System Requirements
