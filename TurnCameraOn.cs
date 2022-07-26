@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class TurnCameraOn : MonoBehaviour
 {
@@ -62,11 +64,9 @@ void BeginEntryAnimation(){
             ready=true;
             ship.transform.position = new Vector3(0,0,0);
             GetComponent<PlayerController>().enabled = !GetComponent<PlayerController>().enabled;
-            ship.GetComponent<Rigidbody>().isKinematic = true;
         }
 
     }
-
 }
 // Function for waiting for the player to get out of the ship
  IEnumerator WaitForSound()
@@ -76,7 +76,6 @@ void BeginEntryAnimation(){
                 audio2.PlayOneShot ((AudioClip)Resources.Load ("Pop"));
     outOfShip = true;
     yield return new WaitForSeconds(4f);
-    
 } 
     // Update is called once per frame
     void Update()
@@ -177,15 +176,12 @@ void BeginEntryAnimation(){
                 if ((posX <-11) && (posZ >-21) && (posZ < -7)){
                     cameraIndex=17;
                 }
-                if ((posX < 5) && (posX>-20) && (posZ < 11) && (posZ > 2)){
+                if ((posX < 11) && (posZ < 11) && (posZ > 2)){
                     cameraIndex=20;
                 }
-                if ((posX < 11) && (posZ < 11) && (posZ > 2)){
+                 if ((posX > 11) && (posZ < 11) && (posZ > 2)){
                     cameraIndex=21;
                 }
-                
-                
-
         }
         //Finish the second floor of cameras
 
@@ -208,10 +204,58 @@ void BeginEntryAnimation(){
             else {
                 cams[i].SetActive(false);
             }
+            if (cameraIndex == 21){
+                BeginEndingAnimation();
+            }
         }
     }
-    else {
+    else if(begin) {
         BeginEntryAnimation();
     }
+    else{
+        BeginEndingAnimation();
+    }
+    }
+    private bool begin = true;
+    private bool shipReadyToLeave = false;
+    public TextMeshProUGUI winningText;
+    private bool playWinningAudio = false;
+    
+    void BeginEndingAnimation(){
+        if (!shipReadyToLeave){
+            AudioSource audio = gameObject.AddComponent < AudioSource > ();
+                audio.PlayOneShot ((AudioClip)Resources.Load ("Airlock"));
+            ship.transform.position = new Vector3(0,10,0);
+            shipReadyToLeave = true;
+            GetComponent<PlayerController>().enabled = !GetComponent<PlayerController>().enabled;
+            ready=false;
+            begin=false;
+            for (i=0; i < cams.Length; i++){
+             cams[i].SetActive(false);
+            }
+            cams[0].SetActive(true);
+            rotateSpeed = 20;
+            transform.position = new Vector3(0,0,0);
+            GetComponent<AudioSource>().Stop();
+            
+        }
+        else {
+            if (!playWinningAudio){
+                AudioSource audio = gameObject.AddComponent < AudioSource > ();
+                audio.PlayOneShot ((AudioClip)Resources.Load ("Winning"));
+                playWinningAudio = true;
+            }
+            if (ship.transform.position.y<15) {
+                ship.transform.Translate(Vector3.up * shipSpeed * Time.deltaTime);
+                shipCam.transform.Rotate(Vector3.left * Time.deltaTime * 30f);
+            }
+            else {
+                shipSpeed=40f;
+                winningText.gameObject.SetActive(true);
+                ship.transform.Translate(Vector3.up * shipSpeed * Time.deltaTime);
+                shipCam.transform.Translate(Vector3.up * rotateSpeed * Time.deltaTime);
+            }
+        }
+
     }
 }

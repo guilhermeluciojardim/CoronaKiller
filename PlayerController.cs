@@ -114,7 +114,7 @@ private bool isJumpAvailable = true;
 
 public int health = 100;
 
-
+ 
     void Jump(){
         //Jumping
         if (Input.GetKeyDown(KeyCode.Space) && isJumpAvailable ){
