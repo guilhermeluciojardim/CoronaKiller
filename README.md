@@ -23,7 +23,8 @@ The project is still in the beggining and the next updates will be the following
 - [x] Make a begining animation for entry in the game
 - [x] Create User interface with Health and Bullet Control
 - [x] Animation for game over
-- [ ] Make a finishing animation
+- [x] Make a finishing animation
+- [ ] Fix last bugs
 - [ ] Project Optimization
 
 
