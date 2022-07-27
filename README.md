@@ -42,7 +42,7 @@ I'm currently using Unity 3D with unity Editor Version 2020.3.36f1
 https://drive.google.com/file/d/1GZVYkQjk6LsLzZ0ICmsw14Bn8jKU4hbj/view?usp=sharing <br>
 3 - Go to Menu Assets - Import Package - Custom Package <br>
 4 - Wait for package install <br>
-5 - Go to File - Build Settings (Add both Game and Menu Scene to the Scenes list.
+5 - Go to File - Build Settings (Add both Game and Menu Scene to the Scenes list. <br>
 6 - Hit play! <br>
 
 [⬆ Voltar ao topo](#Corona)<br>
