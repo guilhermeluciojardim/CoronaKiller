@@ -14,7 +14,7 @@
 
 ### Next ajusts and improvements
 
-The project is still in the beggining and the next updates will be the following tasks
+The project is ready for play!
 
 - [x] Set cameras around the scene
 - [x] Ajust game phisics for better player control and movement
@@ -26,15 +26,19 @@ The project is still in the beggining and the next updates will be the following
 - [x] Make a finishing animation
 - [x] Fix last bugs
 - [x] Project Optimization
-- [ ] Build Project
+- [x] Build Project
 
+##  🎮 Play and have fun!
 
+https://play.unity.com/mg/other/webgl-builds-226614
 
 ## 💻 System Requirements
 
-I'm currently using Unity 3D with unity Editor Version 2020.3.36f1
+I'm currently using Unity 3D with unity Editor Version 2020.3.36f1 in Windows 10.
 
 ## 🚀 Installing Corona Killer
+
+If you wish to open the original project files and mess around with the scripts, follow the instructions below:
 
 1 - Download and Install Unity Editor (Recommended version 2020.3.36f1) - https://learn.unity.com/tutorial/install-the-unity-hub-and-editor# <br>
 2 - Create a new project <br>
