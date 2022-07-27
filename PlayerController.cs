@@ -56,7 +56,6 @@ public class PlayerController : MonoBehaviour
     private bool isReloading=false;
     private int CurrentWeapon = 1;
     private Vector3 WeaponPos;
-    private Quaternion WeaponRotation;
 
     private bool gameOver = false;
 
