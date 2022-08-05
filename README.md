@@ -8,7 +8,7 @@
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/iuricode/README-template?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/iuricode/README-template?style=for-the-badge)
 
-
+<img alt="Git" src="https://guilhermeluciojardim.com.br/wp-content/uploads/2022/08/Captura-de-tela-2022-08-02-13.35.20-1024x576.png" width=800 height=600 />
 
 > This is a game in unity 3D where you control Captain Chroloquine and fight against corona virus monsters.
 
